@@ -2,7 +2,7 @@
 
 ## podstawowy playground do kodu z wykorzystaniem vite
 
-0. nowy projekt w vite `npm create vite@npm`
+0. nowy projekt w vite `npm create vite@latest`
 1. wybierz nazwę dla projektu
 2. wybierz framework (Vanilla)
 3. wybierz JS lub TS
