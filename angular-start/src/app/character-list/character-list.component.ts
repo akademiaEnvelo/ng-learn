@@ -1,49 +1,40 @@
-import { JsonPipe, UpperCasePipe } from '@angular/common';
 import {
-  AfterContentInit,
-  AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
+import { Character } from '../app.component';
 
-interface Titled {
-  getTitle(): string;
+export interface AddToFav {
+  id: number;
 }
 
 @Component({
   selector: 'app-character-list',
-  template: ` <p>{{ label | json | uppercase }}</p> `,
+  template: `
+    <div *ngFor="let character of list">
+      {{ character.name }}
+
+      <button (click)="addToFav.emit({ id: character.id })">add to favs</button>
+    </div>
+  `,
   styles: [],
 })
 export class CharacterListComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() label = 'a';
-  @Input() another = false;
+  @Input() list: Character[] = [];
+  @Output() addToFav = new EventEmitter<AddToFav>();
+  ngOnChanges(changes: SimpleChanges) {}
 
-  heading = 'Lista Postaci';
-
-  constructor() {
-    console.log(this.label.length);
-  }
-
-  getTitle() {
-    return 'Lepsza listę postaci';
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('on changes', changes);
-  }
-
-  ngOnInit() {
-    console.log(this.label.length);
-  }
-
-  likeAPipe() {
-    return JSON.stringify(this.label.toUpperCase());
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {}
+
+  onAddToFav(character: Character, event: Event) {
+    this.addToFav.emit({ id: character.id });
+  }
 }

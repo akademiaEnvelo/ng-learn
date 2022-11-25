@@ -1,1 +1,42 @@
-<app-character-list [label]="title" [another]="true"></app-character-list>
+<header>
+  <h1
+    class="heading"
+    tooltip="to jest tytul"
+    [ngClass]="{
+      'dodatkowa jeszcze-jedna': addAnotherClass,
+      heading: false
+    }"
+  >
+    aplikacja
+  </h1>
+  <h2 *ngIf="showh2; else optionalTemplate">opis aplikacji</h2>
+
+  <p
+    *ngFor="
+      let number of [1, 2, 3, 4, 5, 6];
+      let i = index;
+      let even = even;
+      let odd = odd;
+      let first = first;
+      let last = last
+    "
+    [ngClass]="{ uppercase: last }"
+  >
+    {{ number + " " + i }} <span *ngIf="even">jest even</span>
+    <span *ngIf="odd">jest odd</span>
+  </p>
+
+  <ng-template #optionalTemplate>
+    <h3>no to h3, ale z templatki</h3>
+  </ng-template>
+</header>
+
+<button (click)="toggleClassName()">toggle</button>
+
+<app-character-list
+  *ngIf="!loading; else loadingTmpl"
+  [list]="characters"
+  (addToFav)="handleAddedToFav($event)"
+></app-character-list>
+
+<ng-template #loadingTmpl> Loading... </ng-template>
