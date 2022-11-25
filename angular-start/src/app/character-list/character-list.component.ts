@@ -8,7 +8,9 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ApiService } from '../api.service';
 import { Character } from '../app.component';
+import { MultiService } from '../multi.service';
 
 export interface AddToFav {
   id: number;
@@ -17,6 +19,7 @@ export interface AddToFav {
 @Component({
   selector: 'app-character-list',
   template: `
+    <p>{{ apiService.endpoint }}</p>
     <div *ngFor="let character of list">
       {{ character.name }}
 
@@ -24,10 +27,14 @@ export interface AddToFav {
     </div>
   `,
   styles: [],
+  providers: [MultiService],
 })
 export class CharacterListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() list: Character[] = [];
   @Output() addToFav = new EventEmitter<AddToFav>();
+
+  constructor(public apiService: ApiService, private m: MultiService) {}
+
   ngOnChanges(changes: SimpleChanges) {}
 
   ngOnInit() {}

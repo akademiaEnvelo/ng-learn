@@ -31,7 +31,9 @@
   </ng-template>
 </header>
 
-<button (click)="toggleClassName()">toggle</button>
+<!-- <button (click)="toggleClassName()">toggle</button> -->
+<button (click)="toggleServiceEndpoint()">toggle</button>
+<button (click)="fetchCharacters()">fetch</button>
 
 <app-character-list
   *ngIf="!loading; else loadingTmpl"

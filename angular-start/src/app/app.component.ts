@@ -1,5 +1,7 @@
 import { Component, Directive } from '@angular/core';
+import { ApiService } from './api.service';
 import { AddToFav } from './character-list/character-list.component';
+import { MultiService } from './multi.service';
 
 export interface Character {
   name: string;
@@ -12,6 +14,8 @@ export interface Character {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  // service: ApiService;
+
   currentClass = 'uppercase';
   showh2 = true;
 
@@ -21,6 +25,8 @@ export class AppComponent {
 
   loading = false;
 
+  constructor(private apiService: ApiService, private multi: MultiService) {}
+
   toggleClassName() {
     this.currentClass =
       this.currentClass === 'uppercase' ? 'capitalize' : 'uppercase';
@@ -28,19 +34,23 @@ export class AppComponent {
     this.showh2 = !this.showh2;
   }
 
+  toggleServiceEndpoint() {
+    this.apiService.endpoint = 'location';
+  }
+
   handleAddedToFav(event: AddToFav) {
     console.log(event);
   }
 
-  ngOnInit() {
+  fetchCharacters() {
     this.loading = true;
-    fetch('https://rickandmortyapi.com/api/character')
-      .then((res) => res.json())
-      .then((response: { results: Character[]; info: any }) => {
-        this.characters = response.results;
-        this.loading = false;
-      });
+    this.apiService.getCharacters().then((response) => {
+      this.characters = response.results;
+      this.loading = false;
+    });
   }
+
+  ngOnInit() {}
 }
 
 @Directive({

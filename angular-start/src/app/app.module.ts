@@ -11,3 +11,11 @@ import { CharacterListComponent } from './character-list/character-list.componen
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+@NgModule({
+  declarations: [RootComponent],
+  imports: [AppModule],
+})
+class RootModule {}
+
+class RootComponent {}
