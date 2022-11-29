@@ -19,7 +19,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    console.log('interceptuj!', request);
+    // console.log('interceptuj!', request);
 
     const clone = request.clone({
       url: `${this.URL}${request.url}`,
@@ -27,7 +27,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 
     return next.handle(clone).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ojej błąd', error);
+        // console.log('ojej błąd', error);
 
         return EMPTY;
       })

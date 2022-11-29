@@ -32,11 +32,11 @@ export class RxjsBasicsComponent {
     const btn = document.getElementById('btn') as HTMLButtonElement;
 
     btn.addEventListener('click', () => {
-      console.log('z event listenera');
+      // console.log('z event listenera');
     });
 
     const subscription = fromEvent(btn, 'click').subscribe(() => {
-      console.log('z fromEvent');
+      // console.log('z fromEvent');
     });
 
     const input = document.getElementById('input') as HTMLInputElement;
@@ -81,11 +81,11 @@ export class RxjsBasicsComponent {
       error: (error) => console.log(error),
     });
 
-    of([1, 2, 3, 4]).subscribe(console.log);
+    // of([1, 2, 3, 4]).subscribe(console.log);
 
-    from(['a', 'b', 'c']).subscribe(console.log);
-    from([1, 2, 3, 4]).subscribe(console.log);
-    from(Promise.resolve(100)).subscribe(console.log);
+    // from(['a', 'b', 'c']).subscribe(console.log);
+    // from([1, 2, 3, 4]).subscribe(console.log);
+    // from(Promise.resolve(100)).subscribe(console.log);
 
     // combineLatest([
     //   from(['a', 'b', 'c']),

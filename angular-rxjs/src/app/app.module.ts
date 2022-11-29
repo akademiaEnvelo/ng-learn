@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { EpisodesListComponent } from './episodes-list/episodes-list.component';
 import { CustomHttpInterceptor } from './http.interceptor';
 import { RxjsBasicsComponent } from './rxjs-basics/rxjs-basics.component';
+import { SubjectsBasicsComponent } from './subjects-basics/subjects-basics.component';
+import { FavoriteBarComponent } from './favorite-bar/favorite-bar.component';
 
 @NgModule({
-  declarations: [AppComponent, EpisodesListComponent, RxjsBasicsComponent],
+  declarations: [AppComponent, EpisodesListComponent, RxjsBasicsComponent, SubjectsBasicsComponent, FavoriteBarComponent],
   imports: [BrowserModule, HttpClientModule],
   providers: [
     {
@@ -20,7 +22,7 @@ import { RxjsBasicsComponent } from './rxjs-basics/rxjs-basics.component';
       provide: HTTP_INTERCEPTORS,
       useValue: {
         intercept(request: any, next: any) {
-          console.log('tutaj też wchodzę!');
+          // console.log('tutaj też wchodzę!');
           return next.handle(request);
         },
       },
