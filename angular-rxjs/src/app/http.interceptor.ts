@@ -25,20 +25,6 @@ export class CustomHttpInterceptor implements HttpInterceptor {
       url: `${this.URL}${request.url}`,
     });
 
-    // let clone: HttpRequest<unknown>;
-
-    // if (request.url.endsWith('location')) {
-    //   clone = request.clone({
-    //     url: 'https://rickandmortyapi.com/api/episode',
-    //   });
-    // } else {
-    //   clone = request.clone();
-    // }
-
-    // tutaj wszystko :o
-
-    // this.errorHandler.handle404();
-
     return next.handle(clone).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log('ojej błąd', error);

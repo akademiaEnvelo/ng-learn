@@ -42,7 +42,7 @@ export class AppComponent {
     //   // this.characters = response.results;
     // });
 
-    this.http.get<ApiResponse<Character>>('/characters').subscribe({
+    this.http.get<ApiResponse<Character>>('/character').subscribe({
       next: (response) => {
         this.characters = response.results;
       },

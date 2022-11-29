@@ -5,9 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { EpisodesListComponent } from './episodes-list/episodes-list.component';
 import { CustomHttpInterceptor } from './http.interceptor';
+import { RxjsBasicsComponent } from './rxjs-basics/rxjs-basics.component';
 
 @NgModule({
-  declarations: [AppComponent, EpisodesListComponent],
+  declarations: [AppComponent, EpisodesListComponent, RxjsBasicsComponent],
   imports: [BrowserModule, HttpClientModule],
   providers: [
     {
