@@ -1,0 +1,13 @@
+{
+  "tickets": [
+    {
+      "name": "Soul",
+      "id": 1
+    },
+    {
+      "name": "Soul 2",
+      "id": 2
+    }
+  ],
+  "movies": []
+}

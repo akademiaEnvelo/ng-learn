@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "email": "example@mail.com",
+      "password": "$2a$10$b6KPn94LvMib2b94IFxvWe8QGC78FRxIdCvd7rJadfjgJWGn5Muii",
+      "id": 1
+    },
+    {
+      "email": "example2@mail.com",
+      "password": "$2a$10$6Uot0s9.4HoSg.pfjJykduVnQpJ3R/lX18hLvLZEWSmiyhvCf7aQC",
+      "id": 2
+    }
+  ],
+  "bids": [
+    {
+      "id": 1,
+      "amount": 30,
+      "productId": 1
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Bike",
+      "price": 30000,
+      "description": {
+        "short": "Krótki opis",
+        "long": "Dłuższy opis"
+      },
+      "owner": {
+        "username": "mbappe00"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Pokemon Card",
+      "price": 5000,
+      "description": {
+        "short": "Krótki opis",
+        "long": "Dłuższy opis"
+      },
+      "owner": {
+        "username": "johndoe"
+      }
+    }
+  ]
+}
