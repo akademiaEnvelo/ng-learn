@@ -1,19 +1,38 @@
-<form>
+<form [formGroup]="teamForm" (ngSubmit)="sendForm()">
   <fieldset>
     <legend>Drużyna</legend>
     <div>
       <label>Nazwa</label><br />
-      <input placeholder="Nazwa" />
+      <input
+        [class.error]="teamNameCtrl.touched && teamNameCtrl.errors"
+        formControlName="teamName"
+        placeholder="Nazwa"
+      />
+
+      <ng-container *ngIf="teamNameCtrl.errors as errors">
+        <ng-container *ngIf="teamNameCtrl.touched">
+          <p *ngIf="errors['required']">Te pole jest obowiązkowe</p>
+          <p *ngIf="errors['minlength'] as milLength">
+            Podałeś {{ milLength.actualLength }} znaki, minimum to
+            {{ milLength.requiredLength }}
+          </p>
+        </ng-container>
+      </ng-container>
+
+      {{ teamNameCtrl.errors | json }}
     </div>
 
     <div>
       <label>Trener</label><br />
-      <input placeholder="Imię i nazwisko trenera" />
+      <input
+        formControlName="coachName"
+        placeholder="Imię i nazwisko trenera"
+      />
     </div>
 
     <div>
       <label>Herb klubu</label><br />
-      <input type="file" placeholder="Nazwa" />
+      <input formControlName="clubLogo" type="file" placeholder="Nazwa" />
     </div>
 
     <img *ngIf="logoPreviewURL" [src]="logoPreviewURL" />
@@ -47,7 +66,7 @@
           </div>
         </fieldset>
 
-        <button><span>🗑</span></button>
+        <button type="button"><span>🗑</span></button>
       </div>
     </li>
   </ol>
