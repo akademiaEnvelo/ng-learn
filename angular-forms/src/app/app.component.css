@@ -1,0 +1,17 @@
+ol {
+  margin: 0px;
+  padding-inline-start: 1rem;
+}
+
+fieldset, li > div {
+  display: flex;
+  gap: 10px;
+}
+
+li > div {
+  align-items: center;
+}
+
+button {
+  margin: 1.5rem 0;
+}
