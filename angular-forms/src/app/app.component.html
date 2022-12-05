@@ -32,21 +32,39 @@
 
     <div>
       <label>Herb klubu</label><br />
-      <input formControlName="clubLogo" type="file" placeholder="Nazwa" />
+      <input
+        (change)="setLogoFileToForm($event)"
+        type="file"
+        placeholder="Nazwa"
+      />
     </div>
 
     <img *ngIf="logoPreviewURL" [src]="logoPreviewURL" />
   </fieldset>
 
-  <button type="button">Dodaj zawodnika</button>
+  <input formControlName="hasCreatedYear" type="checkbox" /> rok założenia?
+
+  <textarea
+    *ngIf="teamForm.controls.hasCreatedYear.value"
+    formControlName="createdAt"
+    placeholder="wpisz rok założenia"
+  ></textarea>
+  <br />
+
+  <button (click)="addPlayer()" type="button">Dodaj zawodnika</button>
   <ol>
-    <li>
-      <div>
+    <li
+      *ngFor="
+        let playerForm of teamForm.controls.players.controls;
+        let index = index
+      "
+    >
+      <div [formGroup]="playerForm">
         <fieldset>
           <legend>Add Player</legend>
           <div>
             <label>Imię</label><br />
-            <input placeholder="Imię" />
+            <input formControlName="firstName" placeholder="Imię" />
           </div>
           <div>
             <label>Nazwisko</label><br />
@@ -66,7 +84,9 @@
           </div>
         </fieldset>
 
-        <button type="button"><span>🗑</span></button>
+        <button (click)="removePlayer(index)" type="button">
+          <span>🗑</span>
+        </button>
       </div>
     </li>
   </ol>
