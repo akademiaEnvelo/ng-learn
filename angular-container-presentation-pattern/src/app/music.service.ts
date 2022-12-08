@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, delay, of } from 'rxjs';
+import { SongFormValue } from './add-song-form.component';
+import { v4 as createUuidv4 } from 'uuid';
 
 export interface Song {
   id: string;
@@ -15,7 +17,11 @@ export interface Song {
   providedIn: 'root',
 })
 export class MusicService {
-  songs$$ = new BehaviorSubject<Song[]>([]);
+  private songs$$ = new BehaviorSubject<Song[]>([]);
+
+  get songs$() {
+    return this.songs$$.asObservable();
+  }
 
   constructor() {
     // http mock;
@@ -113,5 +119,28 @@ export class MusicService {
     ]).subscribe((songs) => {
       this.songs$$.next(songs);
     });
+  }
+
+  // for async pipe
+  getData() {
+    return of([1, 2, 3, 4, 5]).pipe(delay(3000));
+  }
+
+  addSong(songFormValue: SongFormValue) {
+    const { duration, album, artist, title } = songFormValue;
+
+    const songDTO = {
+      album,
+      artist,
+      title,
+      createdAt: new Date().getTime().toString(),
+      id: createUuidv4(),
+    } as Song;
+
+    const [minutes, seconds] = duration.split(':');
+
+    songDTO.duration = +minutes * 60 + +seconds;
+
+    this.songs$$.next([...this.songs$$.value, songDTO]);
   }
 }

@@ -4,12 +4,12 @@ import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { debounceTime, filter, map, tap } from 'rxjs/operators';
 import { MusicService, Song } from './music.service';
-import { v4 as uuidv4 } from 'uuid';
+import { AddSongFormComponent, SongFormValue } from './add-song-form.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AddSongFormComponent],
   templateUrl: './app.component.html',
   styles: [
     `
@@ -86,6 +86,13 @@ export class AppComponent {
   private musicService = inject(MusicService);
   private builder = inject(NonNullableFormBuilder);
 
+  // example for async pipe
+  data$ = this.musicService.getData().pipe(
+    tap(() => {
+      console.log('side effects!!!');
+    })
+  );
+
   searchControl = this.builder.control('');
   songs: Song[] = [];
 
@@ -120,36 +127,12 @@ export class AppComponent {
     );
   }
 
-  addSong() {
-    this.createSongForm.markAllAsTouched();
-
-    if (this.createSongForm.invalid) {
-      return;
-    }
-
-    const { duration, album, artist, title } = this.createSongForm
-      .value as Required<typeof this.createSongForm.value>;
-
-    const songDTO = {
-      album,
-      artist,
-      title,
-      createdAt: new Date().getTime().toString(),
-      id: uuidv4(),
-    } as Song;
-
-    const [minutes, seconds] = duration.split(':');
-
-    songDTO.duration = +minutes * 60 + +seconds;
-
-    this.musicService.songs$$.next([
-      ...this.musicService.songs$$.value,
-      songDTO,
-    ]);
+  addSong(songFormValue: SongFormValue) {
+    this.musicService.addSong(songFormValue);
   }
 
   private getSongs() {
-    const sub = this.musicService.songs$$.subscribe((songs) => {
+    const sub = this.musicService.songs$.subscribe((songs) => {
       this.songsRaw = songs;
       this.songs = songs;
     });

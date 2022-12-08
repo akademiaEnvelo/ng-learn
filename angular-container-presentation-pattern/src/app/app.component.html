@@ -4,6 +4,8 @@
     <header>
       <input [formControl]="searchControl" placeholder="Szukaj" />
     </header>
+
+    {{ data$ | async }}
     <table>
       <thead>
         <tr>
@@ -41,16 +43,6 @@
     </table>
   </section>
   <section>
-    Dodaj pieśń
-    <form [formGroup]="createSongForm" (ngSubmit)="addSong()">
-      <input formControlName="artist" placeholder="artysta" />
-      <input formControlName="title" placeholder="tytuł" />
-      <input formControlName="album" placeholder="album" />
-      <div>
-        <span>czas trwania: </span
-        ><input formControlName="duration" type="time" />
-      </div>
-      <button>Dodaj</button>
-    </form>
+    <app-add-song-form (addSong)="addSong($event)"></app-add-song-form>
   </section>
 </main>
