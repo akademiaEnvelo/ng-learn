@@ -1,0 +1,56 @@
+<header></header>
+<main>
+  <section>
+    <header>
+      <input [formControl]="searchControl" placeholder="Szukaj" />
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tytuł</th>
+          <th>Album</th>
+          <th>Data dodania</th>
+          <th></th>
+          <th>⏲</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of songs; let index = index">
+          <td>{{ index + 1 }}</td>
+          <td>
+            <p>{{ song.title }}</p>
+            <p>
+              <em>{{ song.artist }}</em>
+            </p>
+          </td>
+          <td>{{ song.album }}</td>
+          <td>{{ song.createdAt | date : "dd/MM/yyyy" }}</td>
+          <td>
+            <button (click)="toggleFav(song)">
+              {{ song.favorite ? "💗" : "🤍" }}
+            </button>
+          </td>
+          <td>
+            {{ duration(song.duration) }}
+          </td>
+          <td><button>edytuj</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    Dodaj pieśń
+    <form [formGroup]="createSongForm" (ngSubmit)="addSong()">
+      <input formControlName="artist" placeholder="artysta" />
+      <input formControlName="title" placeholder="tytuł" />
+      <input formControlName="album" placeholder="album" />
+      <div>
+        <span>czas trwania: </span
+        ><input formControlName="duration" type="time" />
+      </div>
+      <button>Dodaj</button>
+    </form>
+  </section>
+</main>
