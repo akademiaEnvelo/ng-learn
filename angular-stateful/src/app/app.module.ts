@@ -8,6 +8,7 @@ import { LoginComponent } from './auth';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ROUTES } from './app.routes';
+import { CharactersComponent } from './characters.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ROUTES } from './app.routes';
     HomeComponent,
     EpisodesComponent,
     LoginComponent,
+    CharactersComponent,
   ],
   imports: [
     BrowserModule,
