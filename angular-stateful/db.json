@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "email": "test@test.pl",
+      "password": "$2a$10$8S9EckIlQF5je9bBcLp45e22ShWu66G2C8H9A5DizzitToUNwxyVi",
+      "id": 1
+    }
+  ]
+}
