@@ -68,7 +68,7 @@ export class EpisodesComponent {
 
   first = of(false);
   second = of(213);
-
+  // view model
   vm = combineLatest([this.first, this.second]).pipe(
     map(([isAdmin, time]) => ({
       isAdmin,
@@ -120,6 +120,8 @@ export class EpisodesComponent {
     })
   );
 }
+// observable z gettera
+authValue$ = auth$.pipe(take(1));
 
 type T = Array<{ id: string; date: number }>;
 
