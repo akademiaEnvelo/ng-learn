@@ -153,8 +153,6 @@ export class EpisodesComponent {
     })
   );
 }
-// observable z gettera
-authValue$ = auth$.pipe(take(1));
 
 type T = Array<{ id: string; date: number }>;
 
