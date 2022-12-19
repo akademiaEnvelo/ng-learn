@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, of, take, tap } from 'rxjs';
 import { AuthStateService } from '../auth';
 import { EpisodesStateService } from './episodes-state.service';
@@ -29,10 +29,17 @@ export interface EpisodeDTO {
         [y]="configuration"
       ></app-characters> -->
 
+      <!-- <app-test-cd
+        [value]="selectedSeason + ''"
+        [person]="person"
+      ></app-test-cd>
+      <button (click)="person = { name: 'john' }">change person name</button>
+      {{ person.name }}
+      <br /><br /> -->
       <nav>
         <button
           *ngFor="let entry of episodes | keyvalue"
-          (click)="selectedSeason = +entry.key"
+          (click)="selectedSeason = +entry.key; cdr.detectChanges()"
         >
           season {{ entry.key }}
         </button>
@@ -67,6 +74,10 @@ export class EpisodesComponent {
   authValue$ = inject(AuthStateService).auth$.pipe(take(1));
   selectedSeason = 1;
 
+  cdr = inject(ChangeDetectorRef);
+
+  person: any = {};
+
   state = new BehaviorSubject<{ auth: boolean; list: string[] }>({
     auth: false,
     list: [],
@@ -77,6 +88,10 @@ export class EpisodesComponent {
       ...this.state.value,
       auth: true,
     });
+
+    setTimeout(() => {
+      this.person = { name: 'kamil', age: '35' };
+    }, 3000);
   }
 
   configuration$ = of({ configuration: false, x: 12312 });
@@ -132,6 +147,9 @@ export class EpisodesComponent {
     }),
     tap((results) => {
       console.log(results);
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      }, 300);
     })
   );
 }

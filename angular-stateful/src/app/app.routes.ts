@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { hasAuthGuard, LoginComponent } from './auth';
 import { EpisodesComponent } from './episodes/episodes.component';
+import { MyEpisodesComponent } from './episodes/my-episodes.component';
 import { HomeComponent } from './home/home.component';
 
 export const ROUTES: Routes = [
@@ -12,6 +13,14 @@ export const ROUTES: Routes = [
       {
         path: '',
         component: EpisodesComponent,
+      },
+      {
+        path: 'my-episodes',
+        loadChildren: () => import('./episodes/my-episodes.module'),
+      },
+      {
+        path: 'standalone',
+        loadComponent: () => import('./standalone.component'),
       },
     ],
   },

@@ -10,7 +10,8 @@
           "inlineTemplate": true,
           "inlineStyle": true,
           "flat": true,
-          "skipTests": true
+          "skipTests": true,
+          "changeDetection": "OnPush"
         },
         "@schematics/angular:service": {
           "skipTests": true

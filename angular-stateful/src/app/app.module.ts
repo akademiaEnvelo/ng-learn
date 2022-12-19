@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EpisodesComponent } from './episodes/episodes.component';
@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ROUTES } from './app.routes';
 import { CharactersComponent } from './characters.component';
 import { EpisodeListItemComponent } from './episodes/episode-list-item.component';
+import { TestCdComponent } from './test-cd.component';
+import { MyEpisodesComponent } from './episodes/my-episodes.component';
 
 @NgModule({
   declarations: [
@@ -19,10 +21,13 @@ import { EpisodeListItemComponent } from './episodes/episode-list-item.component
     LoginComponent,
     CharactersComponent,
     EpisodeListItemComponent,
+    TestCdComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, {
+      preloadingStrategy: PreloadAllModules,
+    }),
     HttpClientModule,
     ReactiveFormsModule,
   ],

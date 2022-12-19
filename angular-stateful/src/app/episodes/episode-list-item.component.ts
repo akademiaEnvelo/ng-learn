@@ -11,7 +11,7 @@ import { EpisodeDTO } from './episodes.component';
         [disabled]="episodesService.hasEpisode(episode.id)"
         (click)="episodesService.addEpisode(episode)"
       >
-        ulubione {{ count }}
+        ulubione
       </button>
     </li>
   `,
@@ -26,8 +26,8 @@ export class EpisodeListItemComponent {
   constructor(public episodesService: EpisodesStateService) {}
 
   ngOnInit() {
-    setInterval(() => {
-      this.count++;
-    }, 1000);
+    // setInterval(() => {
+    //   this.count++;
+    // }, 1000);
   }
 }

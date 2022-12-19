@@ -63,7 +63,7 @@ export class AuthStateService {
   private logoutOnDirectAccessToAuthRoute() {
     this.router.events
       .pipe(
-        tap(console.log),
+        // tap(console.log),
         filter(
           (event) => event instanceof NavigationEnd && event.url === '/auth'
         )

@@ -9,7 +9,7 @@ import { EpisodesStateService } from '../episodes/episodes-state.service';
     <header>
       Rick and Morty
       <button (click)="authService.logout()">logout</button>
-      <a>My episodes ({{ count$ | async }}) </a>
+      <a routerLink="my-episodes">My episodes ({{ count$ | async }}) </a>
     </header>
     <router-outlet></router-outlet>
   `,
