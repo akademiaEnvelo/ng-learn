@@ -7,36 +7,25 @@ import { AuthResponse } from './auth-response.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthStateService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private auth$$ = new BehaviorSubject<boolean>(false);
+  private auth$$ = new BehaviorSubject<{ hasAuth: boolean }>({
+    hasAuth: false,
+  });
 
   get auth$() {
     return this.auth$$.asObservable();
   }
 
+  get authValue() {
+    return this.auth$$.value;
+  }
+
   constructor() {
-    // naive checking
-    if (localStorage.getItem('token')) {
-      this.auth$$.next(true);
-    }
-
-    this.auth$$.pipe(skip(1)).subscribe((hasAuth) => {
-      if (!hasAuth) {
-        this.handleNonAuthState();
-      }
-    });
-
-    this.router.events
-      .pipe(
-        filter(
-          (event) => event instanceof NavigationEnd && event.url === '/auth'
-        )
-      )
-      .subscribe(() => {
-        this.logout();
-      });
+    this.onHasAuthChange();
+    this.setStateFromLocalStorage();
+    this.logoutOnDirectAccessToAuthRoute();
   }
 
   login(credentials: { email: string; password: string }) {
@@ -48,7 +37,9 @@ export class AuthService {
       .pipe(
         tap({
           next: (response) => {
+            this.auth$$.next({ hasAuth: true });
             localStorage.setItem('token', response.token);
+            this.router.navigate(['']);
           },
           error: (error) => {
             alert('error');
@@ -59,10 +50,41 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    this.auth$$.next(false);
+    this.auth$$.next({
+      ...this.auth$$.value,
+      hasAuth: false,
+    });
   }
 
   handleNonAuthState() {
     this.router.navigate(['auth']);
+  }
+
+  private logoutOnDirectAccessToAuthRoute() {
+    this.router.events
+      .pipe(
+        tap(console.log),
+        filter(
+          (event) => event instanceof NavigationEnd && event.url === '/auth'
+        )
+      )
+      .subscribe(() => {
+        this.logout();
+      });
+  }
+
+  private onHasAuthChange() {
+    this.auth$$.pipe(skip(1)).subscribe((authState) => {
+      if (!authState.hasAuth) {
+        this.handleNonAuthState();
+      }
+    });
+  }
+
+  private setStateFromLocalStorage() {
+    // naive checking
+    if (localStorage.getItem('token')) {
+      this.auth$$.next({ hasAuth: true });
+    }
   }
 }

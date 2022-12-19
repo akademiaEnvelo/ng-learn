@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ROUTES } from './app.routes';
 import { CharactersComponent } from './characters.component';
+import { EpisodeListItemComponent } from './episodes/episode-list-item.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CharactersComponent } from './characters.component';
     EpisodesComponent,
     LoginComponent,
     CharactersComponent,
+    EpisodeListItemComponent,
   ],
   imports: [
     BrowserModule,
