@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../auth';
+import { map } from 'rxjs';
+import { AuthStateService } from '../auth';
+import { EpisodesStateService } from '../episodes/episodes-state.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +9,15 @@ import { AuthService } from '../auth';
     <header>
       Rick and Morty
       <button (click)="authService.logout()">logout</button>
+      <a>My episodes ({{ count$ | async }}) </a>
     </header>
     <router-outlet></router-outlet>
   `,
   styles: [],
 })
 export class HomeComponent {
-  authService = inject(AuthService);
+  count$ = inject(EpisodesStateService).episodes$.pipe(
+    map((episodes) => episodes.length)
+  );
+  authService = inject(AuthStateService);
 }

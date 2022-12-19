@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { AuthStateService } from './auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ import { AuthService } from './auth.service';
   styles: [],
 })
 export class LoginComponent {
-  authService = inject(AuthService);
+  authService = inject(AuthStateService);
   builder = inject(NonNullableFormBuilder);
 
   form = this.builder.group({

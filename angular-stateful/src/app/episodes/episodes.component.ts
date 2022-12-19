@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, of, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, of, take, tap } from 'rxjs';
+import { AuthStateService } from '../auth';
+import { EpisodesStateService } from './episodes-state.service';
 
 export interface ApiResponse<T> {
   info: { count: number; pages: number };
@@ -21,11 +23,11 @@ export interface EpisodeDTO {
   selector: 'app-episodes',
   template: `
     <ng-container *ngIf="episodes$ | async as episodes; else loading">
-      <app-characters
+      <!-- <app-characters
         *ngIf="configuration$ | async as configuration"
         [x]="[]"
-        [y]="configuration.configuration"
-      ></app-characters>
+        [y]="configuration"
+      ></app-characters> -->
 
       <nav>
         <button
@@ -39,9 +41,20 @@ export interface EpisodeDTO {
       <div>
         <h3>Sezon {{ selectedSeason }}</h3>
         <ol>
-          <li *ngFor="let episodeEntry of episodes[selectedSeason] | keyvalue">
+          <app-episode-list-item
+            *ngFor="let episodeEntry of episodes[selectedSeason] | keyvalue"
+            [episode]="episodeEntry.value"
+          >
+          </app-episode-list-item>
+          <!-- <li *ngFor="let episodeEntry of episodes[selectedSeason] | keyvalue">
             {{ episodeEntry.value.name }}
-          </li>
+            <button
+              [disabled]="episodesService.hasEpisode(episodeEntry.value.id)"
+              (click)="episodesService.addEpisode(episodeEntry.value)"
+            >
+              ulubione
+            </button>
+          </li> -->
         </ol>
       </div>
     </ng-container>
@@ -50,6 +63,8 @@ export interface EpisodeDTO {
   styles: [],
 })
 export class EpisodesComponent {
+  episodesService = inject(EpisodesStateService);
+  authValue$ = inject(AuthStateService).auth$.pipe(take(1));
   selectedSeason = 1;
 
   state = new BehaviorSubject<{ auth: boolean; list: string[] }>({

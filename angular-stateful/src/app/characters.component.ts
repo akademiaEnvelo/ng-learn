@@ -11,5 +11,5 @@ import { Component, Input } from '@angular/core';
 })
 export class CharactersComponent {
   @Input() x: number[] = [];
-  @Input() y: boolean = false;
+  @Input() y!: Record<string, any>;
 }
