@@ -5,5 +5,27 @@
       "password": "$2a$10$8S9EckIlQF5je9bBcLp45e22ShWu66G2C8H9A5DizzitToUNwxyVi",
       "id": 1
     }
+  ],
+  "my-episodes": [
+    {
+      "name": "Rick Potion #9",
+      "id": 6,
+      "userId": "1"
+    },
+    {
+      "name": "Something Ricked This Way Comes",
+      "id": 9,
+      "userId": "1"
+    },
+    {
+      "name": "Pilot",
+      "id": 1,
+      "userId": "1"
+    },
+    {
+      "name": "Rixty Minutes",
+      "id": 8,
+      "userId": "1"
+    }
   ]
 }

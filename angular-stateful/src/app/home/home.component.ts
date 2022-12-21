@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { map } from 'rxjs';
 import { AuthStateService } from '../auth';
-import { EpisodesStateService } from '../episodes/episodes-state.service';
+import { EpisodesStateService } from '../domains/episodes/episodes.state.service';
 
 @Component({
   selector: 'app-home',

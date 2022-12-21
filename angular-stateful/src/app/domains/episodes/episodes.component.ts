@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, of, take, tap } from 'rxjs';
-import { AuthStateService } from '../auth';
-import { EpisodesStateService } from './episodes-state.service';
+import { AuthStateService } from '../../auth';
+import { EpisodesStateService } from './episodes.state.service';
 
 export interface ApiResponse<T> {
   info: { count: number; pages: number };

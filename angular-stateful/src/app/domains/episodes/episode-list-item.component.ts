@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { EpisodesStateService } from './episodes-state.service';
+import { EpisodesStateService } from './episodes.state.service';
 import { EpisodeDTO } from './episodes.component';
 
 @Component({

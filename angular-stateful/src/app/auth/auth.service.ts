@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, filter, skip, tap } from 'rxjs';
+import { UserStateService } from '../core/user.state.service';
 import { AuthResponse } from './auth-response.interface';
 
 @Injectable({
@@ -10,6 +11,8 @@ import { AuthResponse } from './auth-response.interface';
 export class AuthStateService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private userStateService = inject(UserStateService);
+
   private auth$$ = new BehaviorSubject<{ hasAuth: boolean }>({
     hasAuth: false,
   });
@@ -36,9 +39,14 @@ export class AuthStateService {
       })
       .pipe(
         tap({
-          next: (response) => {
+          next: (res) => {
+            console.log(res);
+            const { accessToken, user } = res;
+            this.userStateService.addUser(user);
             this.auth$$.next({ hasAuth: true });
-            localStorage.setItem('token', response.token);
+            localStorage.setItem('token', accessToken);
+            localStorage.setItem('user', JSON.stringify(user));
+
             this.router.navigate(['']);
           },
           error: (error) => {
@@ -50,6 +58,8 @@ export class AuthStateService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
     this.auth$$.next({
       ...this.auth$$.value,
       hasAuth: false,
@@ -63,7 +73,6 @@ export class AuthStateService {
   private logoutOnDirectAccessToAuthRoute() {
     this.router.events
       .pipe(
-        // tap(console.log),
         filter(
           (event) => event instanceof NavigationEnd && event.url === '/auth'
         )
@@ -85,6 +94,12 @@ export class AuthStateService {
     // naive checking
     if (localStorage.getItem('token')) {
       this.auth$$.next({ hasAuth: true });
+    }
+
+    const userFromLS = localStorage.getItem('user');
+
+    if (userFromLS) {
+      this.userStateService.addUser(JSON.parse(userFromLS));
     }
   }
 }

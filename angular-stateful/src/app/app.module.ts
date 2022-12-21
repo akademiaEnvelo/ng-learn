@@ -3,15 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { EpisodesComponent } from './episodes/episodes.component';
+import { EpisodesComponent } from './domains/episodes/episodes.component';
 import { LoginComponent } from './auth';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ROUTES } from './app.routes';
-import { CharactersComponent } from './characters.component';
-import { EpisodeListItemComponent } from './episodes/episode-list-item.component';
+import { CharactersComponent } from './domains/characters/characters.component';
+import { EpisodeListItemComponent } from './domains/episodes/episode-list-item.component';
 import { TestCdComponent } from './test-cd.component';
-import { MyEpisodesComponent } from './episodes/my-episodes.component';
+import { MyEpisodesComponent } from './domains/episodes/my-episodes/my-episodes.component';
 
 @NgModule({
   declarations: [
