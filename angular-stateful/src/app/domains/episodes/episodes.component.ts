@@ -2,21 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, of, take, tap } from 'rxjs';
 import { AuthStateService } from '../../auth';
+import { EpisodeDTO } from './episode.dto';
 import { EpisodesStateService } from './episodes.state.service';
 
 export interface ApiResponse<T> {
   info: { count: number; pages: number };
   results: T[];
-}
-
-export interface EpisodeDTO {
-  air_date: string;
-  characters: string[];
-  created: string;
-  episode: string;
-  id: number;
-  name: string;
-  url: string;
 }
 
 @Component({

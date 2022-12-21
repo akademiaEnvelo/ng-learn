@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { EpisodesStateService } from './episodes.state.service';
-import { EpisodeDTO } from './episodes.component';
+import { EpisodeDTO } from './episode.dto';
 
 @Component({
   selector: 'app-episode-list-item[episode]',
