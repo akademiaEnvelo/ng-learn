@@ -22,7 +22,7 @@ export type JobTechSeniorityLevel = JobOffer['techList'][number]['seniority'];
 
 @Component({
   selector: 'app-root',
-  template: ` test `,
+  template: ` <p class="text-red-600">test</p> `,
 })
 export class AppComponent {
   http = inject(HttpClient);
@@ -66,6 +66,20 @@ export class AppComponent {
       name: this.formBuilder.control(name),
       seniority: this.formBuilder.control<JobTechSeniorityLevel>('Mid'),
     });
+  }
+
+  removeTechSkill(index: number) {
+    this.form.controls.techList.removeAt(index);
+  }
+
+  addDescriptionItem() {
+    this.form.controls.description.controls.items.push(
+      this.formBuilder.control('')
+    );
+  }
+
+  removeDescriptionItem(index: number) {
+    this.form.controls.description.controls.items.removeAt(index);
   }
 
   addOffer() {
