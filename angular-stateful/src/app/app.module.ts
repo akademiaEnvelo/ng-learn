@@ -11,7 +11,6 @@ import { ROUTES } from './app.routes';
 import { CharactersComponent } from './domains/characters/characters.component';
 import { EpisodeListItemComponent } from './domains/episodes/episode-list-item.component';
 import { TestCdComponent } from './test-cd.component';
-import { MyEpisodesComponent } from './domains/episodes/my-episodes/my-episodes.component';
 
 @NgModule({
   declarations: [

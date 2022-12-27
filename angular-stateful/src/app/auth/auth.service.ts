@@ -49,7 +49,7 @@ export class AuthStateService {
 
             this.router.navigate(['']);
           },
-          error: (error) => {
+          error: () => {
             alert('error');
           },
         })

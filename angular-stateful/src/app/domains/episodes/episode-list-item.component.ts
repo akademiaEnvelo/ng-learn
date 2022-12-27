@@ -25,6 +25,7 @@ export class EpisodeListItemComponent {
 
   constructor(public episodesService: EpisodesStateService) {}
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit() {
     // setInterval(() => {
     //   this.count++;

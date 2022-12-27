@@ -4,6 +4,7 @@ import {
   Component,
   Input,
   NgZone,
+  OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { interval, startWith, timer } from 'rxjs';
@@ -19,9 +20,11 @@ import { interval, startWith, timer } from 'rxjs';
   styles: [],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestCdComponent {
-  @Input() value: string = '';
+export class TestCdComponent implements OnInit {
+  @Input() value = '';
   @Input() person: Record<'name' | 'age', string> | null = null;
+
+  items: string[] = [];
 
   constructor(private cdr: ChangeDetectorRef, private zone: NgZone) {}
 
@@ -38,7 +41,7 @@ export class TestCdComponent {
   }
 
   ngOnInit() {
-    this.zone.runOutsideAngular(() => {});
+    // this.zone.runOutsideAngular(() => {});
 
     // this.cdr.detach();
 
