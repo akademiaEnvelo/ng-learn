@@ -1,3 +1,9 @@
 {
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false
 }
