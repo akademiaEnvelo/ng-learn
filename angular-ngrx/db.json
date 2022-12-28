@@ -1,0 +1,22 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "title": "Big Buck Bunny"
+    },
+    {
+      "id": 2,
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      "title": "Subaru Outback On Street And Dirt"
+    }
+  ],
+  "sections": [
+    {
+      "videoId": 1,
+      "id": "6486754471108047",
+      "name": "after 1:25",
+      "timestamp": "00:01:25"
+    }
+  ]
+}
