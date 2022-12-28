@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { VideosComponent } from './videos/videos.component';
 import { VideoDetailsComponent } from './videos/details/video-details.component';
+import { StoreModule } from '@ngrx/store';
+import { videoDetailsReducer } from './videos/details/store/video-details.reducer';
+import { VideoDetailsState } from './videos/details/store/video-details.state';
 
 const routes: Routes = [
   {
@@ -35,6 +38,10 @@ const routes: Routes = [
   },
 ];
 
+export interface AppState {
+  videoDetails: VideoDetailsState;
+}
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, VideosComponent],
   imports: [
@@ -42,6 +49,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     VideoDetailsComponent,
+    StoreModule.forRoot({
+      videoDetails: videoDetailsReducer,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

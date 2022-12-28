@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, delay, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { VideoSource } from '../videos.component';
 import { VideoSection } from './video-details.component';
 import { SectionUpdatePayload } from './video-section-item.component';
