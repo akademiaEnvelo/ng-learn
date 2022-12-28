@@ -17,6 +17,18 @@
       "id": "6486754471108047",
       "name": "after 1:25",
       "timestamp": "00:01:25"
+    },
+    {
+      "name": "another breakpoint2",
+      "timestamp": "00:03:11",
+      "videoId": "2",
+      "id": "XeZr_XW"
+    },
+    {
+      "name": "another",
+      "timestamp": "00:04:50",
+      "videoId": "1",
+      "id": "NL2hF_h"
     }
   ]
 }

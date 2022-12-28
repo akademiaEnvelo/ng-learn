@@ -12,6 +12,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { formatSecondsToHHMMSS } from '../../format-to-hhmmss';
 import { VideoSource } from '../videos.component';
+import { VideoDetailsStateService } from './video-details.state.service';
 import {
   SectionSelectPayload,
   SectionUpdatePayload,
@@ -45,7 +46,7 @@ export interface VideoSection {
       <button (click)="add(name.value, time.value)">Dodaj</button>
     </fieldset>
 
-    <ol *ngIf="videoSections$ | async">
+    <ol *ngIf="videoSections$ | async as videoSections">
       <li *ngFor="let section of videoSections">
         <app-video-section-item
           [section]="section"
@@ -57,80 +58,37 @@ export interface VideoSection {
     </ol>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [VideoDetailsStateService],
 })
 export class VideoDetailsComponent {
   @ViewChild('video')
   video!: ElementRef<HTMLVideoElement>;
 
-  http = inject(HttpClient);
-  cdr = inject(ChangeDetectorRef);
+  private videoDetailsStateService = inject(VideoDetailsStateService);
+  private videoId = inject(ActivatedRoute).snapshot.params['id'];
 
-  videoId = inject(ActivatedRoute).snapshot.params['id'];
+  videosrc$ = this.videoDetailsStateService.selectCurrentUrl$;
+  videoSections$ = this.videoDetailsStateService.selectSections$;
 
-  videosrc$ = this.http
-    .get<VideoSource>('http://localhost:3000/videos/' + this.videoId)
-    .pipe(map((video) => video.url));
-
-  videoSections: VideoSection[] = [];
-
-  videoSections$ = this.http
-    .get<VideoSection[]>(
-      `http://localhost:3000/videos/${this.videoId}/sections`
-    )
-    .pipe(
-      tap((sections) => {
-        this.videoSections = sections;
-        this.cdr.detectChanges();
-      })
-    );
-
-  add(value: string, time: string) {
-    this.http
-      .post<VideoSection>(
-        `http://localhost:3000/videos/${this.videoId}/sections`,
-        {
-          name: value,
-          timestamp: time,
-        }
-      )
-      .subscribe((section) => {
-        this.videoSections = [...this.videoSections, section];
-        this.cdr.detectChanges();
-      });
+  ngOnInit() {
+    this.videoDetailsStateService.fetch(this.videoId);
   }
 
-  update({ sectionId, updatedName }: SectionUpdatePayload) {
-    this.http
-      .patch<VideoSection>(`http://localhost:3000/sections/${sectionId}`, {
-        name: updatedName,
-      })
-      .subscribe((updated) => {
-        this.videoSections = this.videoSections.map((section) =>
-          section.id === updated.id
-            ? {
-                ...updated,
-              }
-            : section
-        );
+  add(value: string, time: string) {
+    this.videoDetailsStateService.add(this.videoId, value, time);
+  }
 
-        this.cdr.detectChanges();
-      });
+  update(payload: SectionUpdatePayload) {
+    this.videoDetailsStateService.update(payload);
+  }
+
+  remove(sectionId: string) {
+    this.videoDetailsStateService.remove(sectionId);
   }
 
   goToSection([hours, minutes, seconds]: SectionSelectPayload['timestamp']) {
     this.video.nativeElement.currentTime =
       hours * 3600 + 60 * minutes + seconds;
-  }
-
-  remove(sectionId: string) {
-    this.http
-      .delete(`http://localhost:3000/sections/${sectionId}`)
-      .subscribe(() => {
-        this.videoSections = this.videoSections.filter(
-          (section) => section.id !== sectionId
-        );
-        this.cdr.detectChanges();
-      });
   }
 
   useTime(timeInput: HTMLInputElement) {

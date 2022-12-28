@@ -15,3 +15,7 @@ export function formatSecondsToHHMMSS(secondsAccumulate: number) {
 
   return `${prefixify(hours)}:${prefixify(minutes)}:${prefixify(seconds)}`;
 }
+
+// input: 64
+
+// output: '00:01:04'
