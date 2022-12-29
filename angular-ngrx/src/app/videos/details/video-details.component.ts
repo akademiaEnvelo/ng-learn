@@ -10,6 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.module';
 import { formatSecondsToHHMMSS } from '../../format-to-hhmmss';
+import { VideoDetailsActions } from './store/video-details.actions';
+import {
+  selectCurrentUrl,
+  selectExactSection,
+  selectSections,
+} from './store/video-details.selectors';
+import { initialVideoDetailState } from './store/video-details.state';
 import { VideoDetailsService } from './vide-details.service';
 import { VideoDetailsStateService } from './video-details.state.service';
 import {
@@ -24,11 +31,17 @@ export interface VideoSection {
   timestamp: string;
 }
 
+type VideoDetailsPick = Required<Pick<AppState, 'videoDetails'>>;
+
+type AppStateWithRequiredVideoDetailsState = AppState & VideoDetailsPick;
+
 @Component({
   selector: 'app-video-details',
   standalone: true,
   imports: [NgFor, NgIf, AsyncPipe, VideoSectionItemComponent],
   template: `
+    <ng-container *ngIf="settings$ | async as settings"> </ng-container>
+
     <video
       *ngIf="videosrc$ | async as src"
       #video
@@ -71,8 +84,20 @@ export class VideoDetailsComponent {
 
   // videosrc$ = this.videoDetailsStateService.selectCurrentUrl$;
   // videoSections$ = this.videoDetailsStateService.selectSections$;  // videosrc$ = this.videoDetailsStateService.selectCurrentUrl$;
-  videosrc$ = this.store.select((store) => store.videoDetails.currentVideoUrl);
-  videoSections$ = this.store.select((store) => store.videoDetails.sections);
+  videosrc$ = this.store.select(selectCurrentUrl);
+  videoSections$ = this.store.select(selectSections);
+
+  settings$ = this.store.select((state) =>
+    state.videoDetails
+      ? state.videoDetails.currentVideoUrl
+      : initialVideoDetailState.currentVideoUrl
+  );
+
+  // starredVideoSection$ = this.store.select(selectExactSection(3));
+
+  // mixedValue$ = this.store.select(
+  //   (state) => state.videoDetails?.currentVideoUrl + state.settings.default
+  // );
 
   ngOnInit() {
     // this.videoDetailsStateService.fetch(this.videoId);
@@ -91,7 +116,8 @@ export class VideoDetailsComponent {
 
   remove(sectionId: string) {
     // this.videoDetailsStateService.remove(sectionId);
-    this.videoDetailsService.remove(sectionId);
+    // this.videoDetailsService.remove(sectionId);
+    this.store.dispatch(VideoDetailsActions.removeVideoSection({ sectionId }));
   }
 
   goToSection([hours, minutes, seconds]: SectionSelectPayload['timestamp']) {

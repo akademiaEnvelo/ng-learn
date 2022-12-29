@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { VideoSection } from '../video-details.component';
 
 export const VideoDetailsActions = createActionGroup({
@@ -12,6 +12,14 @@ export const VideoDetailsActions = createActionGroup({
       sectionId: string;
     }>(),
     'remove video section': props<{ sectionId: string }>(),
+  },
+});
+
+export const VideoDetailsAPIActions = createActionGroup({
+  source: 'Video Details API',
+  events: {
+    ['remove video section success']: props<{ sectionId: string }>(),
+    ['remove video section failure']: emptyProps(),
   },
 });
 

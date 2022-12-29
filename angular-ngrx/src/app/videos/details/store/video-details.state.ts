@@ -1,5 +1,7 @@
 import { VideoSection } from '../video-details.component';
 
+export const videoDetailsFeatureKey = 'videoDetails';
+
 export interface VideoDetailsState {
   sections: VideoSection[];
   currentVideoUrl: string;

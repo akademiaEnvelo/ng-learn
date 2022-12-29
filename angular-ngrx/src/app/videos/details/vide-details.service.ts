@@ -8,7 +8,9 @@ import { VideoDetailsActions } from './store/video-details.actions';
 import { VideoSection } from './video-details.component';
 import { SectionUpdatePayload } from './video-section-item.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class VideoDetailsService {
   private store = inject<Store<AppState>>(Store);
   private http = inject(HttpClient);
@@ -54,13 +56,12 @@ export class VideoDetailsService {
   }
 
   remove(sectionId: string) {
-    this.http
-      .delete(`http://localhost:3000/sections/${sectionId}`)
-      .subscribe(() => {
-        this.store.dispatch(
-          VideoDetailsActions.removeVideoSection({ sectionId })
-        );
-      });
+    return this.http.delete(`http://localhost:3000/sections/${sectionId}`);
+    // .subscribe(() => {
+    //   this.store.dispatch(
+    //     VideoDetailsActions.removeVideoSection({ sectionId })
+    //   );
+    // });
   }
 
   protected ngOnDestroy() {

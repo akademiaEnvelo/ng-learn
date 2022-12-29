@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,8 @@ import { VideoDetailsComponent } from './videos/details/video-details.component'
 import { StoreModule } from '@ngrx/store';
 import { videoDetailsReducer } from './videos/details/store/video-details.reducer';
 import { VideoDetailsState } from './videos/details/store/video-details.state';
+import { SettingsState } from './settings/store/settings.state';
+import { EffectsModule } from '@ngrx/effects';
 
 const routes: Routes = [
   {
@@ -26,11 +28,7 @@ const routes: Routes = [
           },
           {
             path: 'videos',
-            component: VideosComponent,
-          },
-          {
-            path: 'videos/:id',
-            component: VideoDetailsComponent,
+            loadChildren: () => import('./videos/videos.module'),
           },
           {
             path: 'settings',
@@ -43,19 +41,20 @@ const routes: Routes = [
 ];
 
 export interface AppState {
-  videoDetails: VideoDetailsState;
+  videoDetails?: VideoDetailsState;
+  settings?: SettingsState;
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, VideosComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    VideoDetailsComponent,
-    StoreModule.forRoot({
-      videoDetails: videoDetailsReducer,
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
     }),
+    HttpClientModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

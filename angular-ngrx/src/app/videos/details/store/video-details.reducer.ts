@@ -1,5 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { VideoDetailsActions } from './video-details.actions';
+import {
+  VideoDetailsActions,
+  VideoDetailsAPIActions,
+} from './video-details.actions';
 import { initialVideoDetailState } from './video-details.state';
 
 export const videoDetailsReducer = createReducer(
@@ -31,14 +34,17 @@ export const videoDetailsReducer = createReducer(
       };
     }
   ),
-  on(VideoDetailsActions.removeVideoSection, (state, { sectionId }) => {
-    const filteredSections = state.sections.filter(
-      (section) => section.id !== sectionId
-    );
+  on(
+    VideoDetailsAPIActions.removeVideoSectionSuccess,
+    (state, { sectionId }) => {
+      const filteredSections = state.sections.filter(
+        (section) => section.id !== sectionId
+      );
 
-    return {
-      ...state,
-      sections: filteredSections,
-    };
-  })
+      return {
+        ...state,
+        sections: filteredSections,
+      };
+    }
+  )
 );
