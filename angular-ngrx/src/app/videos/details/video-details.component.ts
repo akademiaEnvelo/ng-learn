@@ -1,19 +1,15 @@
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, tap } from 'rxjs';
 import { AppState } from 'src/app/app.module';
 import { formatSecondsToHHMMSS } from '../../format-to-hhmmss';
-import { VideoSource } from '../videos.component';
 import { VideoDetailsService } from './vide-details.service';
 import { VideoDetailsStateService } from './video-details.state.service';
 import {

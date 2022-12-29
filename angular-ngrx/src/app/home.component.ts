@@ -4,7 +4,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-home',
   template: `
     <header>
-      <h1><a routerLink="/">Jutub 🎬</a></h1>
+      <h1>Jutub 🎬</h1>
+      <nav>
+        <a routerLink="/">My videos</a> |
+        <a routerLink="/settings">Ustawienia</a>
+      </nav>
     </header>
     <router-outlet></router-outlet>
   `,

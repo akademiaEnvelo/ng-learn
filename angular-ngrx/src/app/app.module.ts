@@ -32,6 +32,10 @@ const routes: Routes = [
             path: 'videos/:id',
             component: VideoDetailsComponent,
           },
+          {
+            path: 'settings',
+            loadChildren: () => import('./settings/settings.module'),
+          },
         ],
       },
     ],
