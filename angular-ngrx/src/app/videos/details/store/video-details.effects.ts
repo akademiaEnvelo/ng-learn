@@ -27,6 +27,9 @@ export class VideoDetailsEffects {
   removeVideoDetailsEffect$ = createEffect(
     () =>
       this.actions$.pipe(
+        tap((action) => {
+          console.log('jaka akcja?', action);
+        }),
         ofType(VideoDetailsActions.removeVideoSection),
         filter(() => confirm('Czy na pewno chcesz ją usunąć?')),
         exhaustMap(({ sectionId }) => {

@@ -18,8 +18,8 @@ export const VideoDetailsActions = createActionGroup({
 export const VideoDetailsAPIActions = createActionGroup({
   source: 'Video Details API',
   events: {
-    ['remove video section success']: props<{ sectionId: string }>(),
-    ['remove video section failure']: emptyProps(),
+    'remove video section success': props<{ sectionId: string }>(),
+    'remove video section failure': emptyProps(),
   },
 });
 
