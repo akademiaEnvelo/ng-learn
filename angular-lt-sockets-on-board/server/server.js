@@ -12,6 +12,8 @@ io.on("connection", (socket) => {
 
   handleDisconnectEvent(socket);
   handleMsgEvent(socket);
+
+  socket.on("random", () => {});
 });
 
 server.listen(5000, () => {

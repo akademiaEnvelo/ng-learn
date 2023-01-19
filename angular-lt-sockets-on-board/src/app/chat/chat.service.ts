@@ -9,7 +9,7 @@ export class ChatService {
   private socket = inject(SocketService);
   private chatState = inject(ChatState);
 
-  private destroyToken$ = new ReplaySubject<void>(1);
+  private destroyToken$$ = new ReplaySubject<void>(1);
 
   emitMesage(message: Message) {
     this.socket.emit('msg', message);
@@ -18,14 +18,14 @@ export class ChatService {
   handleIncomingMessages() {
     this.socket
       .subscribe<Message>('msg')
-      .pipe(takeUntil(this.destroyToken$))
+      .pipe(takeUntil(this.destroyToken$$))
       .subscribe((message) => {
         this.chatState.addMessage(message);
       });
   }
 
   ngOnDestroy() {
-    this.destroyToken$.next();
-    this.destroyToken$.complete();
+    this.destroyToken$$.next();
+    this.destroyToken$$.complete();
   }
 }
